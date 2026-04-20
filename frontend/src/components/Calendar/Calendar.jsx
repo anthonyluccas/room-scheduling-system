@@ -24,6 +24,10 @@ function Calendar() {
     ...Array(primeiroDia).fill(null),
     ...Array.from({ length: totalDias }, (_, i) => i + 1),
   ];
+  const hoje = new Date();
+  const diaHoje = hoje.getDate();
+  const mesHoje = hoje.getMonth() + 1;
+  const anoHoje = hoje.getFullYear();
 
   return (
     <div className="p-6 text-white">
@@ -73,9 +77,13 @@ function Calendar() {
           {dias.map((dia, index) => (
             <div
               key={index}
-              className="border border-gray-800 p-2 min-h-16 text-sm"
+              className={`${dia ? "border border-gray-800" : "border border-transparent"} flex flex-col p-2 min-h-16 text-sm ${
+                dia === diaHoje && mes === mesHoje && ano === anoHoje
+                  ? "bg-[#6366f1]"
+                  : ""
+              }`}
             >
-              {dia}
+              <span>{dia}</span>
             </div>
           ))}
         </div>
