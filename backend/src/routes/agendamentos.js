@@ -2,14 +2,15 @@ const express = require("express");
 const router = express.Router();
 const agendamentos = require("../models/agendamentos.js");
 const { v4: uuidv4 } = require("uuid");
+const autenticar = require("../middlewares/auth.js");
 
 // LISTAR TODOS
-router.get("/", (req, res) => {
+router.get("/", autenticar, (req, res) => {
   res.json(agendamentos);
 });
 
 // LISTAR POR ID
-router.get("/:id", (req, res) => {
+router.get("/:id", autenticar, (req, res) => {
   const id = req.params.id;
   const agendamento = agendamentos.find((a) => a.id === id);
 
@@ -21,7 +22,7 @@ router.get("/:id", (req, res) => {
 });
 
 // CRIAR
-router.post("/", (req, res) => {
+router.post("/", autenticar, (req, res) => {
   const novoAgendamento = {
     id: uuidv4(),
     sala_id: uuidv4(),
@@ -33,7 +34,7 @@ router.post("/", (req, res) => {
 });
 
 //EDITAR PELO ID
-router.put("/:id", (req, res) => {
+router.put("/:id", autenticar, (req, res) => {
   const id = req.params.id;
   const index = agendamentos.findIndex((a) => a.id === id);
 
@@ -49,7 +50,7 @@ router.put("/:id", (req, res) => {
 });
 
 // DELETAR PELO ID
-router.delete("/:id", (req, res) => {
+router.delete("/:id", autenticar, (req, res) => {
   const id = req.params.id;
   const index = agendamentos.findIndex((a) => a.id === id);
 
