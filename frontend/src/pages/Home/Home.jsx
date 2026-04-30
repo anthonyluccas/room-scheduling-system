@@ -3,7 +3,7 @@ import Calendar from "@/components/Calendar/Calendar";
 import BookingModal from "@/components/BookingModal/BookingModal";
 import { useState } from "react";
 
-function Dashboard() {
+function Home() {
   const [modalAberto, setModalAberto] = useState(false);
   const [andar, setAndar] = useState("todos");
 
@@ -40,4 +40,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Home;

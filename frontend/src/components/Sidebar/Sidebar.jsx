@@ -10,19 +10,19 @@ function Sidebar() {
       <nav>
         <NavLink
           className="flex items-center gap-3 text-gray-400 hover:text-white p-3 rounded-lg hover:bg-[#0f1117] transition w-full mb-1"
-          to="/dashboard"
+          to="/home"
         >
           <Calendar size={18} /> Calendario
         </NavLink>
         <NavLink
           className="flex items-center gap-3 text-gray-400 hover:text-white p-3 rounded-lg hover:bg-[#0f1117] transition w-full mb-1"
-          to="/dashboard"
+          to="/rooms"
         >
           <DoorOpen size={18} /> Salas
         </NavLink>
         <NavLink
           className="flex items-center gap-3 text-gray-400 hover:text-white p-3 rounded-lg hover:bg-[#0f1117] transition w-full mb-1"
-          to="/dashboard"
+          to="/scheduling"
         >
           <ClipboardList size={18} /> Agendamentos
         </NavLink>
