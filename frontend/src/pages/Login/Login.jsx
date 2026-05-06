@@ -32,6 +32,7 @@ function Login() {
           </label>
           <input
             value={usuario}
+            required
             onChange={(e) => setUsuario(e.target.value)}
             className="w-full bg-[#0f1117] text-white rounded-lg p-3 border border-gray-700 mb-4"
             type="text"
@@ -44,6 +45,7 @@ function Login() {
           </label>
           <input
             value={senha}
+            required
             onChange={(e) => setSenha(e.target.value)}
             className="w-full bg-[#0f1117] text-white rounded-lg p-3 border border-gray-700 mb-4"
             type="password"
