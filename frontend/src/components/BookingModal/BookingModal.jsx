@@ -24,6 +24,15 @@ function BookingModal({ onFechar, agendamento }) {
     buscarSalas();
   }, []);
 
+  async function handleExcluir() {
+    await axios.delete(`http://localhost:3000/agendamentos/${agendamento.id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    onFechar();
+  }
+
   async function handleSalvar() {
     if (agendamento) {
       await axios.put(
@@ -149,6 +158,14 @@ function BookingModal({ onFechar, agendamento }) {
               >
                 Salvar
               </button>
+              {agendamento && (
+                <button
+                  onClick={handleExcluir}
+                  className="flex-1 p-3 rounded-lg bg-red-600 font-bold text-white transition cursor-pointer hover:bg-red-800"
+                >
+                  Excluir
+                </button>
+              )}
             </div>
           </div>
         </div>
