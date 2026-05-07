@@ -5,6 +5,11 @@ import { useState } from "react";
 
 function BookingModal({ onFechar }) {
   const [salas, setSalas] = useState([]);
+  const [salaId, setSalaId] = useState("");
+  const [data, setData] = useState("");
+  const [turno, setTurno] = useState("");
+  const [horario, setHorario] = useState("");
+  const [descricao, setDescricao] = useState("");
 
   useEffect(() => {
     async function buscarSalas() {
@@ -18,6 +23,21 @@ function BookingModal({ onFechar }) {
 
     buscarSalas();
   }, []);
+
+  async function handleSalvar() {
+    await axios.post(
+      "http://localhost:3000/agendamentos",
+
+      { salaId, data, turno, horario, descricao },
+
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      },
+    );
+    onFechar();
+  }
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -38,6 +58,8 @@ function BookingModal({ onFechar }) {
               Sala
             </label>
             <select
+              value={salaId}
+              onChange={(e) => setSalaId(e.target.value)}
               className="w-full bg-[#0f1117] text-white rounded-lg p-3 border border-gray-700 mb-4"
               name=""
               id=""
@@ -53,6 +75,8 @@ function BookingModal({ onFechar }) {
               Data
             </label>
             <input
+              value={data}
+              onChange={(e) => setData(e.target.value)}
               className="w-full bg-[#0f1117] text-white rounded-lg p-3 border border-gray-700 mb-4"
               type="date"
             ></input>
@@ -61,35 +85,41 @@ function BookingModal({ onFechar }) {
               Turno
             </label>
             <select
+              value={turno}
+              onChange={(e) => setTurno(e.target.value)}
               className="w-full bg-[#0f1117] text-white rounded-lg p-3 border border-gray-700 mb-4"
               name=""
               id=""
             >
-              <option value="">Manhã</option>
-              <option value="">Tarde</option>
-              <option value="">Noite</option>
+              <option value="1">Manhã</option>
+              <option value="2">Tarde</option>
+              <option value="3">Noite</option>
             </select>
 
             <label className="block text-gray-400 text-sm mb-1" htmlFor="">
               Horário
             </label>
             <select
+              value={horario}
+              onChange={(e) => setHorario(e.target.value)}
               className="w-full bg-[#0f1117] text-white rounded-lg p-3 border border-gray-700 mb-4"
               name=""
               id=""
             >
-              <option value="">A</option>
-              <option value="">B</option>
-              <option value="">C</option>
-              <option value="">D</option>
-              <option value="">E</option>
-              <option value="">F</option>
+              <option value="1">A</option>
+              <option value="2">B</option>
+              <option value="3">C</option>
+              <option value="4">D</option>
+              <option value="5">E</option>
+              <option value="6">F</option>
             </select>
 
             <label className="block text-gray-400 text-sm mb-1" htmlFor="">
               Descrição
             </label>
             <textarea
+              value={descricao}
+              onChange={(e) => setDescricao(e.target.value)}
               className="w-full bg-[#0f1117] text-white rounded-lg p-3 border border-gray-700 mb-4"
               name=""
               id=""
@@ -103,7 +133,10 @@ function BookingModal({ onFechar }) {
                 Cancelar
               </button>
 
-              <button className="flex-1 p-3 rounded-lg bg-[#6366f1] font-bold text-white transition cursor-pointer hover:bg-[#4f46e5]">
+              <button
+                onClick={handleSalvar}
+                className="flex-1 p-3 rounded-lg bg-[#6366f1] font-bold text-white transition cursor-pointer hover:bg-[#4f46e5]"
+              >
                 Salvar
               </button>
             </div>

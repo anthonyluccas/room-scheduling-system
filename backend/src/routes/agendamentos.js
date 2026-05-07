@@ -25,7 +25,7 @@ router.get("/:id", autenticar, (req, res) => {
 router.post("/", autenticar, (req, res) => {
   const novoAgendamento = {
     id: uuidv4(),
-    sala_id: uuidv4(),
+    salaId: uuidv4(),
     ...req.body,
   };
 
