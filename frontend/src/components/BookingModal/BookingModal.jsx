@@ -3,13 +3,13 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 
-function BookingModal({ onFechar }) {
+function BookingModal({ onFechar, agendamento }) {
   const [salas, setSalas] = useState([]);
-  const [salaId, setSalaId] = useState("");
-  const [data, setData] = useState("");
-  const [turno, setTurno] = useState("");
-  const [horario, setHorario] = useState("");
-  const [descricao, setDescricao] = useState("");
+  const [salaId, setSalaId] = useState(agendamento?.salaId || "");
+  const [data, setData] = useState(agendamento?.data || "");
+  const [turno, setTurno] = useState(agendamento?.turno || "");
+  const [horario, setHorario] = useState(agendamento?.horario || "");
+  const [descricao, setDescricao] = useState(agendamento?.descricao || "");
 
   useEffect(() => {
     async function buscarSalas() {
@@ -25,17 +25,27 @@ function BookingModal({ onFechar }) {
   }, []);
 
   async function handleSalvar() {
-    await axios.post(
-      "http://localhost:3000/agendamentos",
-
-      { salaId, data, turno, horario, descricao },
-
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+    if (agendamento) {
+      await axios.put(
+        `http://localhost:3000/agendamentos/${agendamento.id}`,
+        { salaId, data, turno, horario, descricao },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         },
-      },
-    );
+      );
+    } else {
+      await axios.post(
+        `http://localhost:3000/agendamentos`,
+        { salaId, data, turno, horario, descricao },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
+    }
     onFechar();
   }
 

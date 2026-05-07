@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-function Calendar() {
+function Calendar({ onSelecionarAgendamento }) {
   const [mes, setMes] = useState(4);
   const [ano, setAno] = useState(2026);
   const meses = [
@@ -112,6 +112,7 @@ function Calendar() {
                 .map((a) => (
                   <div
                     key={a.id}
+                    onClick={() => onSelecionarAgendamento(a)}
                     className="bg-[#6366f1] rounded text-xs p-1 mt-1 truncate"
                   >
                     {a.descricao}

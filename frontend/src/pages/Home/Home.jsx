@@ -6,6 +6,7 @@ import { useState } from "react";
 function Home() {
   const [modalAberto, setModalAberto] = useState(false);
   const [andar, setAndar] = useState("todos");
+  const [agendamentoSelecionado, setAgendamentoSelecionado] = useState(null);
 
   return (
     <div className="flex h-screen bg-[#0f1117]">
@@ -33,8 +34,18 @@ function Home() {
             Novo Agendamento
           </button>
         </header>
-        <Calendar />
-        {modalAberto && <BookingModal onFechar={() => setModalAberto(false)} />}
+        <Calendar
+          onSelecionarAgendamento={(agendamento) => {
+            setAgendamentoSelecionado(agendamento);
+            setModalAberto(true);
+          }}
+        />
+        {modalAberto && (
+          <BookingModal
+            onFechar={() => setModalAberto(false)}
+            agendamento={agendamentoSelecionado}
+          />
+        )}
       </div>
     </div>
   );
