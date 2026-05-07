@@ -1,6 +1,24 @@
 import { X } from "lucide-react";
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
 
 function BookingModal({ onFechar }) {
+  const [salas, setSalas] = useState([]);
+
+  useEffect(() => {
+    async function buscarSalas() {
+      const resposta = await axios.get("http://localhost:3000/rooms", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setSalas(resposta.data);
+    }
+
+    buscarSalas();
+  }, []);
+
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="rounded-2xl p-6 bg-[#1a1d27] w-full max-w-md">
@@ -24,11 +42,11 @@ function BookingModal({ onFechar }) {
               name=""
               id=""
             >
-              <option value="">Sala 101</option>
-              <option value="">Sala 102</option>
-              <option value="">Sala 103</option>
-              <option value="">Sala 104</option>
-              <option value="">Sala 105</option>
+              {salas.map((sala) => (
+                <option key={sala.id} value={sala.id}>
+                  {sala.descricao}
+                </option>
+              ))}
             </select>
 
             <label className="block text-gray-400 text-sm mb-1" htmlFor="">
