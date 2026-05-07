@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function Calendar() {
@@ -28,6 +30,20 @@ function Calendar() {
   const diaHoje = hoje.getDate();
   const mesHoje = hoje.getMonth() + 1;
   const anoHoje = hoje.getFullYear();
+
+  const [agendamentos, setAgendamentos] = useState([]);
+
+  useEffect(() => {
+    async function buscarAgendamento() {
+      const resposta = await axios.get("http://localhost:3000/agendamentos", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setAgendamentos(resposta.data);
+    }
+    buscarAgendamento();
+  }, []);
 
   return (
     <div className="p-6 text-white">
@@ -84,6 +100,23 @@ function Calendar() {
               }`}
             >
               <span>{dia}</span>
+              {agendamentos
+                .filter((a) => {
+                  const dataAgendamento = new Date(a.data);
+                  return (
+                    dataAgendamento.getDate() === dia &&
+                    dataAgendamento.getMonth() + 1 === mes &&
+                    dataAgendamento.getFullYear() === ano
+                  );
+                })
+                .map((a) => (
+                  <div
+                    key={a.id}
+                    className="bg-[#6366f1] rounded text-xs p-1 mt-1 truncate"
+                  >
+                    {a.descricao}
+                  </div>
+                ))}
             </div>
           ))}
         </div>
