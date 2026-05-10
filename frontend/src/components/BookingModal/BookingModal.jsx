@@ -1,11 +1,11 @@
 import { X } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useState } from "react";
+import BookingDetails from "./BookingDetails";
 
 function BookingModal({ onFechar, agendamento }) {
   const [salas, setSalas] = useState([]);
-  const [salaId, setSalaId] = useState(agendamento?.salaId || "");
+  const [sala_id, setSalaId] = useState(agendamento?.salaId || "");
   const [data, setData] = useState(agendamento?.data || "");
   const [turno, setTurno] = useState(agendamento?.turno || "");
   const [horario, setHorario] = useState(agendamento?.horario || "");
@@ -37,7 +37,7 @@ function BookingModal({ onFechar, agendamento }) {
     if (agendamento) {
       await axios.put(
         `http://localhost:3000/agendamentos/${agendamento.id}`,
-        { salaId, data, turno, horario, descricao },
+        { sala_id, data, turno, horario, descricao },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -47,7 +47,7 @@ function BookingModal({ onFechar, agendamento }) {
     } else {
       await axios.post(
         `http://localhost:3000/agendamentos`,
-        { salaId, data, turno, horario, descricao },
+        { sala_id, data, turno, horario, descricao },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -77,7 +77,7 @@ function BookingModal({ onFechar, agendamento }) {
               Sala
             </label>
             <select
-              value={salaId}
+              value={sala_id}
               onChange={(e) => setSalaId(e.target.value)}
               className="w-full bg-[#0f1117] text-white rounded-lg p-3 border border-gray-700 mb-4"
               name=""
@@ -160,7 +160,10 @@ function BookingModal({ onFechar, agendamento }) {
               </button>
               {agendamento && (
                 <button
-                  onClick={handleExcluir}
+                  onClick={() => {
+                    handleExcluir();
+                    onFechar();
+                  }}
                   className="flex-1 p-3 rounded-lg bg-red-600 font-bold text-white transition cursor-pointer hover:bg-red-800"
                 >
                   Excluir

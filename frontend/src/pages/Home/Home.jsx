@@ -1,10 +1,12 @@
 import Sidebar from "@/components/Sidebar/Sidebar";
 import Calendar from "@/components/Calendar/Calendar";
 import BookingModal from "@/components/BookingModal/BookingModal";
+import BookingDetails from "@/components/BookingModal/BookingDetails";
 import { useState } from "react";
 
 function Home() {
   const [modalAberto, setModalAberto] = useState(false);
+  const [modalDetalhes, setModalDetalhes] = useState(false);
   const [andar, setAndar] = useState("todos");
   const [agendamentoSelecionado, setAgendamentoSelecionado] = useState(null);
 
@@ -37,9 +39,16 @@ function Home() {
         <Calendar
           onSelecionarAgendamento={(agendamento) => {
             setAgendamentoSelecionado(agendamento);
-            setModalAberto(true);
+            setModalDetalhes(true);
           }}
         />
+        {modalDetalhes && (
+          <BookingDetails
+            onFechar={() => setModalDetalhes(false)}
+            agendamento={agendamentoSelecionado}
+          />
+        )}
+
         {modalAberto && (
           <BookingModal
             onFechar={() => setModalAberto(false)}

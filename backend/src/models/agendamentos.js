@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 const agendamento = [
   {
     id: uuidv4(),
-    salaId: uuidv4(),
+    sala_id: uuidv4(),
     data: "2026-04-20",
     turno: 1,
     horario: 4,
@@ -12,7 +12,7 @@ const agendamento = [
 
   {
     id: uuidv4(),
-    salaId: uuidv4(),
+    sala_id: uuidv4(),
     data: "2026-04-20",
     turno: 1,
     horario: 2,
@@ -21,7 +21,7 @@ const agendamento = [
 
   {
     id: uuidv4(),
-    salaId: uuidv4(),
+    sala_id: uuidv4(),
     data: "2026-04-20",
     turno: 2,
     horario: 4,
